@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeAccountingApp", "EmployeeAccountingApp.csproj", "{0158EAAB-867A-4CF4-8690-7B3EEF3FA975}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeAccountingApp.Tests", "..\EmployeeAccountingApp.Tests\EmployeeAccountingApp.Tests.csproj", "{1886C57F-FE0E-4025-964A-F8DF4EE789F1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0158EAAB-867A-4CF4-8690-7B3EEF3FA975}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0158EAAB-867A-4CF4-8690-7B3EEF3FA975}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0158EAAB-867A-4CF4-8690-7B3EEF3FA975}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0158EAAB-867A-4CF4-8690-7B3EEF3FA975}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1886C57F-FE0E-4025-964A-F8DF4EE789F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1886C57F-FE0E-4025-964A-F8DF4EE789F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1886C57F-FE0E-4025-964A-F8DF4EE789F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1886C57F-FE0E-4025-964A-F8DF4EE789F1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5C8B8C05-69BF-4134-AC3F-D5FE7D1BE1E1}
+	EndGlobalSection
+EndGlobal
