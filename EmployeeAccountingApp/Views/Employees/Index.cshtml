@@ -1,0 +1,72 @@
+﻿@model IEnumerable<EmployeeAccountingApp.ViewModels.EmployeeViewModel>
+
+@{
+    Layout = @"~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Добавить пользователя", "Add")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                Имя
+            </th>
+            <th>
+                Фамилия
+            </th>
+            <th>
+                Возраст
+            </th>
+            <th>
+                Пол
+            </th>
+            <th>
+                Отдел
+            </th>
+            <th>
+                Язык программирования
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee.Surname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee.Age)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee.Department.Caption)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Experience.Language.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Редактировать", "Edit", new { id = item.Employee.Id }) |
+                    @Html.ActionLink("Удалить", "Delete", new { id = item.Employee.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+</body>
+</html>

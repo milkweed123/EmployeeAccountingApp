@@ -127,7 +127,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -135,12 +135,30 @@
     <Compile Include="Migrations\202205211109020_AddModels.designer.cs">
       <DependentUpon>202205211109020_AddModels.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202205211210183_AddConstrains.cs" />
+    <Compile Include="Migrations\202205211210183_AddConstrains.designer.cs">
+      <DependentUpon>202205211210183_AddConstrains.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202205221147216_AddExperience.cs" />
+    <Compile Include="Migrations\202205221147216_AddExperience.designer.cs">
+      <DependentUpon>202205221147216_AddExperience.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202205221918401_RemoveFKKeyExpirience.cs" />
+    <Compile Include="Migrations\202205221918401_RemoveFKKeyExpirience.designer.cs">
+      <DependentUpon>202205221918401_RemoveFKKeyExpirience.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202205221928369_AddEmployeeIsDeleted.cs" />
+    <Compile Include="Migrations\202205221928369_AddEmployeeIsDeleted.designer.cs">
+      <DependentUpon>202205221928369_AddEmployeeIsDeleted.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Data\ApplicationDbContext.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\Experience.cs" />
     <Compile Include="Models\Language.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\EmployeeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -175,9 +193,10 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Employees\Add.cshtml" />
+    <Content Include="Views\Employees\Delete.cshtml" />
+    <Content Include="Views\Employees\Edit.cshtml" />
+    <Content Include="Views\Employees\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -198,6 +217,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202205211109020_AddModels.resx">
       <DependentUpon>202205211109020_AddModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205211210183_AddConstrains.resx">
+      <DependentUpon>202205211210183_AddConstrains.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205221147216_AddExperience.resx">
+      <DependentUpon>202205221147216_AddExperience.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205221918401_RemoveFKKeyExpirience.resx">
+      <DependentUpon>202205221918401_RemoveFKKeyExpirience.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205221928369_AddEmployeeIsDeleted.resx">
+      <DependentUpon>202205221928369_AddEmployeeIsDeleted.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

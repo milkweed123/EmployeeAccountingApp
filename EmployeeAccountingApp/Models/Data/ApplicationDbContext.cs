@@ -8,14 +8,15 @@ namespace EmployeeAccountingApp.Models.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        public DbSet <Department> Departments { get; set; }
-        public DbSet <Employee> Employees { get; set; }
-
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet <Experience> Experiences { get; set; }
         public DbSet<Language> Languages { get; set; }
 
-        public ApplicationDbContext() :base("DefaultConnection")
+        public ApplicationDbContext() : base("DefaultConnection")
         {
 
         }
+
     }
 }
