@@ -10,9 +10,11 @@ using System.Web.Mvc;
 using EmployeeAccountingApp.Models;
 using EmployeeAccountingApp.Models.Data;
 using EmployeeAccountingApp.ViewModels;
+using EmployeeAccountingApp.AuthAttribute;
 
 namespace EmployeeAccountingApp.Controllers
 {
+    [BasicAuthenticationAttribute]
     public class EmployeesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -36,13 +38,21 @@ namespace EmployeeAccountingApp.Controllers
         }
 
         // GET: Employees/Add
-        public ActionResult Add()
+        public async Task<ActionResult> Add()
         {
             ViewBag.Departaments = new SelectList(db.Departments, "Id", "Caption");
             ViewBag.Languages = new SelectList(db.Languages, "Id", "Name");
             return View();
         }
 
+        public async Task<ActionResult> AutocompleteSearch(string Prefix)
+        {
+            var names =await db.Employees.Where(a => a.Name.Contains(Prefix))
+                           .Select(a => new { value = a.Name })
+                           .Distinct().ToListAsync();
+
+            return Json(names, JsonRequestBehavior.AllowGet);
+        }
         // POST: Employees/Add
         [HttpPost]
         [ValidateAntiForgeryToken]

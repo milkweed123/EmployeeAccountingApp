@@ -13,6 +13,8 @@ namespace EmployeeAccountingApp.Models.Data
         public DbSet <Experience> Experiences { get; set; }
         public DbSet<Language> Languages { get; set; }
 
+        public DbSet<User> Users { get; set; }
+
         public ApplicationDbContext() : base("DefaultConnection")
         {
 
