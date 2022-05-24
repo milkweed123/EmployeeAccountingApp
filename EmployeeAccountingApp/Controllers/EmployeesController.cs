@@ -14,22 +14,42 @@ using EmployeeAccountingApp.AuthAttribute;
 
 namespace EmployeeAccountingApp.Controllers
 {
-    [BasicAuthenticationAttribute]
+   [BasicAuthentication]
     public class EmployeesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Employees
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string option, string search)
         {
-            var employees = await db.Employees.Where(e=>!e.IsDeleted).Include(e => e.Department).ToListAsync();
+            List<Employee> employees = null;
+            var helpIqueryable = db.Employees.Where(e => !e.IsDeleted).Include(e => e.Department);
+            if (string.IsNullOrEmpty(search))
+            {
+                employees = await helpIqueryable.ToListAsync();
+            }
+            else
+            {
+                if (option == "Имя")
+                {
+                    employees = await helpIqueryable.Where(x => x.Name.StartsWith(search)).ToListAsync();
+                }
+                else if (option == "Фамилия")
+                {
+                    employees = await helpIqueryable.Where(x => x.Surname.StartsWith(search)).ToListAsync();
+                }
+                else
+                {
+                    employees = await helpIqueryable.Where(x => x.Department.Caption.StartsWith(search)).ToListAsync();
+                }
+            }
             List<EmployeeViewModel> employeeVMs = new List<EmployeeViewModel>(employees.Count);
             foreach (var item in employees)
             {
                 EmployeeViewModel employeeVM = new EmployeeViewModel();
                 employeeVM.Employee = item;
                 employeeVM.Experience.Employee = item;
-                employeeVM.Experience.Language = db.Experiences.Include(e=>e.Language)
+                employeeVM.Experience.Language = db.Experiences.Include(e => e.Language)
                     .FirstOrDefaultAsync(exp => exp.EmployeeId == item.Id)
                     .GetAwaiter().GetResult().Language;
                 employeeVMs.Add(employeeVM);
@@ -37,6 +57,10 @@ namespace EmployeeAccountingApp.Controllers
             return View(employeeVMs);
         }
 
+        private void ModifyLastActionTimeUser (int userId)
+        {
+            db.Users.FirstOrDefault(u=>u.Id==userId).LastActionTime = DateTime.Now;          
+        }
         // GET: Employees/Add
         public async Task<ActionResult> Add()
         {
@@ -47,7 +71,7 @@ namespace EmployeeAccountingApp.Controllers
 
         public async Task<ActionResult> AutocompleteSearch(string Prefix)
         {
-            var names =await db.Employees.Where(a => a.Name.Contains(Prefix))
+            var names = await db.Employees.Where(a => a.Name.Contains(Prefix))
                            .Select(a => new { value = a.Name })
                            .Distinct().ToListAsync();
 
@@ -59,10 +83,11 @@ namespace EmployeeAccountingApp.Controllers
         public async Task<ActionResult> Add(EmployeeViewModel employeeVM)
         {
             if (ModelState.IsValid)
-            {                
+            {
                 db.Employees.Add(employeeVM.Employee);
                 employeeVM.Experience.Employee = employeeVM.Employee;
                 db.Experiences.Add(employeeVM.Experience);
+                ModifyLastActionTimeUser(Convert.ToInt32(Session["UserId"]));
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -85,7 +110,7 @@ namespace EmployeeAccountingApp.Controllers
             employeeVM.Employee = employee;
             employeeVM.Experience.Employee = employee;
             employeeVM.Experience = await db.Experiences.Include(e => e.Language)
-                .FirstOrDefaultAsync(exp => exp.EmployeeId == id);            
+                .FirstOrDefaultAsync(exp => exp.EmployeeId == id);
             ViewBag.Departaments = new SelectList(db.Departments, "Id", "Caption");
             ViewBag.Languages = new SelectList(db.Languages, "Id", "Name");
             return View(employeeVM);
@@ -100,8 +125,9 @@ namespace EmployeeAccountingApp.Controllers
             {
                 db.Entry(employeeVM.Employee).State = EntityState.Modified;
                 employeeVM.Experience.Employee = employeeVM.Employee;
-                var experience =await db.Experiences.FirstOrDefaultAsync(exp => exp.EmployeeId == employeeVM.Employee.Id);
+                var experience = await db.Experiences.FirstOrDefaultAsync(exp => exp.EmployeeId == employeeVM.Employee.Id);
                 experience.LanguageId = employeeVM.Experience.LanguageId;
+                ModifyLastActionTimeUser(Convert.ToInt32(Session["UserId"]));
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -129,7 +155,8 @@ namespace EmployeeAccountingApp.Controllers
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Employee employee = await db.Employees.FindAsync(id);
-            employee.IsDeleted = true;  
+            employee.IsDeleted = true;
+            ModifyLastActionTimeUser(Convert.ToInt32(Session["UserId"]));
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

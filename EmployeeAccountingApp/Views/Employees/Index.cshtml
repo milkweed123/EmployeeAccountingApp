@@ -13,6 +13,20 @@
 
 </head>
 <body>
+    @using (Html.BeginForm("Index", "Employees", FormMethod.Get))
+    {
+    <div class="form-group" style="margin:30px">
+        <b> Опции поиска: </b>
+        @Html.RadioButton("option", "Имя",true) 
+        <text>Имя</text> 
+        @Html.RadioButton("option", "Фамилия")
+        <text> Фамилия </text>
+        @Html.RadioButton("option", "Отдел")
+        <text>Отдел</text>
+        @Html.TextBox("search") 
+        <input type = "submit"  name = "submit" value = "Поиск"/>
+    </div>
+    }
     <p>
         @Html.ActionLink("Добавить пользователя", "Add")
     </p>
